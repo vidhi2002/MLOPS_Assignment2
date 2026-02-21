@@ -75,3 +75,8 @@ htmlcov/
 # Docker
 .dockerignore
 /models
+
+.dvc/cache/
+mlruns/
+mlflow.db
+__pycache__/
