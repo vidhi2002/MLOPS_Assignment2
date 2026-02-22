@@ -9,6 +9,7 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
+
     strategy:
       matrix:
         python-version: ["3.10"]
@@ -17,37 +18,28 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Set up Python ${{ matrix.python-version }}
+      - name: Set up Python
         uses: actions/setup-python@v4
         with:
           python-version: ${{ matrix.python-version }}
 
-      - name: Upgrade pip and install basics
-        run: |
-          python -m pip install --upgrade pip setuptools wheel
+      - name: Upgrade pip
+        run: python -m pip install --upgrade pip setuptools wheel
 
       - name: Install dependencies
         run: |
-          if [ -f requirements.txt ]; then pip install -r requirements.txt || true; fi
+          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 
-      - name: Install this package in editable mode
-        run: |
-          pip install -e .
+      - name: Install project package
+        run: pip install -e .
 
-      - name: Debug installed packages
+      - name: Debug package import
         run: |
-          echo "Installed packages (top 30):"
-          pip list --format=columns | sed -n '1,30p'
-          echo "Check import and module location:"
-          python - << 'PYCODE'
-import mlops_project, mlops_project.models.cnn_model as m
-print("mlops_project imported from:", mlops_project.__file__)
-print("Attributes in cnn_model:", dir(m))
-PYCODE
+          python -c "import mlops_project; print('mlops_project imported successfully')"
+          python -c "import mlops_project.models.cnn_model as m; print('cnn_model loaded successfully')"
 
-      - name: Run Pytest with coverage
-        run: |
-          pytest tests/ -v --cov=mlops_project --cov-report=xml
+      - name: Run tests
+        run: pytest tests/ -v --cov=mlops_project --cov-report=xml
 
   build-and-push:
     needs: test
@@ -67,7 +59,7 @@ PYCODE
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
-      - name: Build & Push Docker image
+      - name: Build and push Docker image
         uses: docker/build-push-action@v5
         with:
           context: .
@@ -83,5 +75,4 @@ PYCODE
 
     steps:
       - name: Deployment Simulation
-        run: |
-          echo "Deployment step (CI placeholder): successful"
+        run: echo "Deployment successful"
