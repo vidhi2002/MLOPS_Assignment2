@@ -7,8 +7,8 @@ from PIL import Image
 import io
 import json
 
-from src.models.cnn_model import ModelUtils
-from src.data.preprocessing import DataPreprocessor
+from models.cnn_model import ModelUtils
+from models.cnn_model import DataPreprocessor
 
 class TestInferenceFunctions:
     """Test cases for inference functions"""
