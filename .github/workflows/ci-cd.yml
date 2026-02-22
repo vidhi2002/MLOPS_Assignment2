@@ -67,8 +67,8 @@ jobs:
           context: .
           push: true
           tags: |
-            ghcr.io/${{ github.repository }}/mlops-app:latest
-            ghcr.io/${{ github.repository }}/mlops-app:${{ github.sha }}
+            ghcr.io/vidhi2002/mlops-assignment2:latest
+            ghcr.io/vidhi2002/mlops-assignment2:${{ github.sha }}
 
       - name: Run container for smoke test
         run: |
