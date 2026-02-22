@@ -23,23 +23,23 @@ jobs:
       with:
         python-version: ${{ matrix.python-version }}
 
-    - name: Cache pip dependencies
-      uses: actions/cache@v3
-      with:
-        path: ~/.cache/pip
-        key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
-        restore-keys: |
-          ${{ runner.os }}-pip-
+    - name: Upgrade pip
+      run: python -m pip install --upgrade pip
 
-    - name: Install dependencies and project
+    - name: Install dependencies
       run: |
-        python -m pip install --upgrade pip
         pip install -r requirements.txt
         pip install -e .
 
-    - name: Run unit tests
+    - name: Debug Python path
+      run: |
+        python -c "import sys; print(sys.path)"
+        python -c "import mlops_project; print('Package import successful')"
+
+    - name: Run tests
       run: |
         pytest tests/ -v --cov=mlops_project --cov-report=xml
+
   build-and-push:
     needs: test
     runs-on: ubuntu-latest
@@ -49,7 +49,7 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v4
 
-    - name: Set up Docker Buildx
+    - name: Setup Docker Buildx
       uses: docker/setup-buildx-action@v3
 
     - name: Login to Docker Hub
@@ -62,13 +62,10 @@ jobs:
       uses: docker/build-push-action@v5
       with:
         context: .
-        file: ./Dockerfile
         push: true
         tags: |
           ${{ secrets.DOCKER_USERNAME }}/cats-dogs-mlops:latest
           ${{ secrets.DOCKER_USERNAME }}/cats-dogs-mlops:${{ github.sha }}
-        cache-from: type=gha
-        cache-to: type=gha,mode=max
 
   deploy:
     needs: build-and-push
@@ -76,8 +73,6 @@ jobs:
     if: github.ref == 'refs/heads/main'
 
     steps:
-    - name: Deployment Simulation
+    - name: Simulated Deployment
       run: |
-        echo "Simulating production deployment..."
-        echo "Docker image pushed successfully"
         echo "Deployment successful"
