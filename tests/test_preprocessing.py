@@ -5,7 +5,7 @@ import tempfile
 import shutil
 from pathlib import Path
 
-from models.cnn_model import DataPreprocessor, CatsDogsDataset
+from mlops_project.data.preprocessing import DataPreprocessor, CatsDogsDataset
 
 class TestDataPreprocessor:
     """Test cases for DataPreprocessor class"""

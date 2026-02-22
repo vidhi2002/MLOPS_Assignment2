@@ -4,7 +4,7 @@ import tempfile
 import shutil
 from pathlib import Path
 
-from models.cnn_model import SimpleCNN, ModelUtils
+from mlops_project.models.cnn_model import SimpleCNN, ModelUtils
 
 class TestSimpleCNN:
     """Test cases for SimpleCNN model"""

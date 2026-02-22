@@ -39,8 +39,7 @@ jobs:
 
     - name: Run unit tests
       run: |
-        pytest tests/ -v --cov=src --cov-report=xml
-
+        pytest tests/ -v --cov=mlops_project --cov-report=xml
   build-and-push:
     needs: test
     runs-on: ubuntu-latest
