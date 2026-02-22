@@ -253,8 +253,7 @@ async def startup_event():
     logger.info("Starting Cats vs Dogs inference service")
     success = load_model()
     if not success:
-        logger.error("Failed to initialize model")
-        raise RuntimeError("Model initialization failed")
+        logger.warning("Model not loaded, but service will start for health checks")
 
 @app.get("/health", response_model=HealthResponse)
 async def health_check():

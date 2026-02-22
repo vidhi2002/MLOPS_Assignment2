@@ -1,82 +1,77 @@
+# =========================
 # Python
+# =========================
 __pycache__/
 *.py[cod]
 *$py.class
 *.so
 .Python
 build/
-develop-eggs/
 dist/
-downloads/
-eggs/
-.eggs/
-lib/
-lib64/
-parts/
-sdist/
-var/
-wheels/
 *.egg-info/
-.installed.cfg
 *.egg
-MANIFEST
 
-# PyTorch
-*.pth
-*.pt
+# =========================
+# Virtual Environment
+# =========================
+.env
+.venv/
+venv/
 
-# TensorFlow
-*.h5
-*.pb
-
-# MLflow
-mlruns/
-mlartifacts/
-
-# DVC
-.dvc/cache/
-.dvc/tmp/
-
-# Data
-data/raw/*
-data/processed/*
-!data/raw/.gitkeep
-!data/processed/.gitkeep
-
-# Models
-models/
-*.pkl
-*.joblib
-
-# Logs
-*.log
-logs/
-
+# =========================
 # IDE
+# =========================
 .vscode/
 .idea/
 *.swp
 *.swo
 
+# =========================
 # OS
+# =========================
 .DS_Store
 Thumbs.db
 
-# Environment
-.env
-.venv/
-venv/
+# =========================
+# Logs
+# =========================
+*.log
+logs/
 
+# =========================
 # Testing
+# =========================
 .coverage
 .pytest_cache/
 htmlcov/
 
-# Docker
-.dockerignore
-/models
-
-.dvc/cache/
+# =========================
+# MLflow
+# =========================
 mlruns/
+mlartifacts/
 mlflow.db
-__pycache__/
+
+# =========================
+# DVC
+# =========================
+.dvc/cache/
+.dvc/tmp/
+
+# =========================
+# Data (ignore actual data but keep structure)
+# =========================
+data/raw/*
+data/processed/*
+!data/raw/.gitkeep
+!data/processed/.gitkeep
+
+# =========================
+# Model artifacts ONLY (not source code models folder)
+# =========================
+*.pth
+*.pt
+*.h5
+*.pb
+*.pkl
+*.joblib
