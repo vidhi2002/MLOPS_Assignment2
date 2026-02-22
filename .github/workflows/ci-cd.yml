@@ -76,7 +76,9 @@ jobs:
       - name: Run container for smoke test
         run: |
           docker run -d -p 8000:8000 --name test-container ${{ env.IMAGE_NAME }}:latest
-          sleep 15
+          sleep 10
+          docker ps
+          docker logs test-container
 
       - name: Smoke test - Health check
         run: |
